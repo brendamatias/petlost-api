@@ -3,6 +3,7 @@ import Message from '../schemas/Message';
 class MessageController {
   async index(req, res) {
     const messages = await Message.aggregate([
+      { $sort: { createdAt: -1 } },
       {
         $group: {
           originalId: { $first: '$_id' },
@@ -11,6 +12,7 @@ class MessageController {
           recipient: { $first: '$recipient' },
           content: { $first: '$content' },
           read: { $first: '$read' },
+          createdAt: { $first: '$createdAt' },
         },
       },
       {
@@ -21,6 +23,7 @@ class MessageController {
           recipient: '$recipient',
           content: '$content',
           read: '$read',
+          createdAt: '$createdAt',
         },
       },
     ]);
