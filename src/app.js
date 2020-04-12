@@ -3,6 +3,7 @@ import 'dotenv/config';
 import express from 'express';
 import http from 'http';
 import socketIO from 'socket.io';
+import cors from 'cors';
 import routes from './routes';
 
 import sendMessage from './socket';
@@ -34,6 +35,7 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use(cors());
   }
 
   routes() {
