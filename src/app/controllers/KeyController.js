@@ -1,3 +1,5 @@
+import bcrypt from 'bcryptjs';
+import User from '../models/User';
 import Message from '../schemas/Message';
 
 class KeyController {
@@ -14,7 +16,11 @@ class KeyController {
     }).sort({ createdAt: 'desc' });
 
     if (!messages) {
-      return res.status(401).json({ error: 'Key not found.' });
+      const { id, name, email } = await User.findByPk(req.userId);
+      const secretText = id + name + email + process.env.APP_SECRET;
+      const key = await bcrypt.hash(secretText, 8);
+
+      return res.json({ key });
     }
 
     return res.json({ key: messages.key });
