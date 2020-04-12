@@ -3,6 +3,7 @@ import Message from '../schemas/Message';
 class MessageController {
   async index(req, res) {
     const messages = await Message.aggregate([
+      { $match: { $or: [{ sender: req.userId }, { recipient: req.userId }] } },
       { $sort: { createdAt: -1 } },
       {
         $group: {
