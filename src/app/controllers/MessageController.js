@@ -34,9 +34,7 @@ class MessageController {
         { sender: [req.userId, req.id] },
         { recipient: [req.userId, req.id] },
       ],
-    })
-      .sort({ createdAt: 'asc' })
-      .limit(20);
+    }).sort({ createdAt: 'asc' });
 
     return res.json(messages);
   }
