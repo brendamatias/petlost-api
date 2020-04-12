@@ -3,6 +3,7 @@ import { Router } from 'express';
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import MessageController from './app/controllers/MessageController';
+import KeyController from './app/controllers/KeyController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -18,5 +19,7 @@ routes.put('/users', UserController.update);
 
 routes.get('/messages', MessageController.index);
 routes.get('/messages/:id', MessageController.show);
+
+routes.get('/keys/:id', KeyController.show);
 
 export default routes;
