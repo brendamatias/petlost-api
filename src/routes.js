@@ -13,6 +13,7 @@ routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware);
 
+routes.get('/users/:id', UserController.show);
 routes.put('/users', UserController.update);
 
 routes.get('/messages', MessageController.index);
