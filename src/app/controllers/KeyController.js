@@ -13,6 +13,10 @@ class KeyController {
       ],
     }).sort({ createdAt: 'desc' });
 
+    if (!messages) {
+      return res.status(401).json({ error: 'Key not found.' });
+    }
+
     return res.json({ key: messages.key });
   }
 }
