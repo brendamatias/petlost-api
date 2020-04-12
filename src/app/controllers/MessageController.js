@@ -35,8 +35,12 @@ class MessageController {
   async show(req, res) {
     const messages = await Message.find({
       $or: [
-        { sender: [req.userId, req.id] },
-        { recipient: [req.userId, req.id] },
+        {
+          $and: [{ sender: req.userId }, { recipient: req.params.id }],
+        },
+        {
+          $and: [{ sender: req.params.id }, { recipient: req.userId }],
+        },
       ],
     }).sort({ createdAt: 'asc' });
 
