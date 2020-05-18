@@ -6,6 +6,7 @@ import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
 import AddressController from './app/controllers/AddressController';
+import PetsController from './app/controllers/PetsController';
 
 import MessageController from './app/controllers/MessageController';
 import KeyController from './app/controllers/KeyController';
@@ -20,19 +21,27 @@ routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware);
 
-/* User */
+/* Users */
 routes.get('/users/:id', UserController.show);
 routes.put('/users', UserController.update);
 /* ---- */
 
 routes.post('/files', upload.single('file'), FileController.store);
 
-/* Address */
+/* Addresses */
 routes.get('/addresses', AddressController.index);
 routes.get('/addresses/:id', AddressController.show);
 routes.post('/addresses', AddressController.store);
 routes.put('/addresses/:id', AddressController.update);
 routes.delete('/addresses/:id', AddressController.delete);
+/* ------- */
+
+/* Pets */
+routes.get('/pets', PetsController.index);
+routes.get('/pets/:id', PetsController.show);
+routes.post('/pets', PetsController.store);
+routes.put('/pets/:id', PetsController.update);
+routes.delete('/pets/:id', PetsController.delete);
 /* ------- */
 
 routes.get('/messages', MessageController.index);
