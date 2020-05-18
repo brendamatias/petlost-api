@@ -5,7 +5,13 @@ import File from '../models/File';
 
 class UserController {
   async show(req, res) {
-    const { id, name, email } = await User.findByPk(req.params.id);
+    const user = await User.findByPk(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    const { id, name, email } = user;
 
     return res.json({ id, name, email });
   }
@@ -54,6 +60,10 @@ class UserController {
     const { email, oldPassword } = req.body;
 
     const user = await User.findByPk(req.userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
 
     if (email !== user.email) {
       const userExists = await User.findOne({
