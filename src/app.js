@@ -5,6 +5,8 @@ import cors from 'cors';
 import path from 'path';
 import routes from './routes';
 
+import rateLimiter from './app/middlewares/rateLimiter';
+
 import './database';
 
 class App {
@@ -16,6 +18,7 @@ class App {
   }
 
   middlewares() {
+    this.server.use(rateLimiter);
     this.server.use(cors());
     this.server.use(express.json());
     this.server.use(
