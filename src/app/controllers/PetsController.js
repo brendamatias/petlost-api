@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 import { Op } from 'sequelize';
 
+import CachePet from '../lib/CachePet';
+
 import Pet from '../models/Pet';
 import File from '../models/File';
 import Petfile from '../models/Petfile';
@@ -8,35 +10,41 @@ import Address from '../models/Address';
 
 class PetsController {
   async index(req, res) {
-    const { page = 1, filters = '' } = req.query;
+    let pets = await CachePet.recover('pets-list');
 
-    const pets = await Pet.findAll({
-      include: [
-        {
-          model: Address,
-          as: 'address',
-          attributes: ['id', 'city', 'state'],
+    if (!pets) {
+      const { page = 1, filters = '' } = req.query;
+
+      pets = await Pet.findAll({
+        include: [
+          {
+            model: Address,
+            as: 'address',
+            attributes: ['id', 'city', 'state'],
+          },
+          {
+            model: Petfile,
+            as: 'files',
+            attributes: ['id', 'file_id'],
+            include: [
+              {
+                model: File,
+                as: 'file',
+                attributes: ['id', 'url', 'path'],
+              },
+            ],
+          },
+        ],
+        where: {
+          user_id: { [Op.ne]: null },
+          filters: { [Op.like]: `%${filters}%` },
         },
-        {
-          model: Petfile,
-          as: 'files',
-          attributes: ['id', 'file_id'],
-          include: [
-            {
-              model: File,
-              as: 'file',
-              attributes: ['id', 'url', 'path'],
-            },
-          ],
-        },
-      ],
-      where: {
-        user_id: { [Op.ne]: null },
-        filters: { [Op.like]: `%${filters}%` },
-      },
-      limit: 20,
-      offset: (page - 1) * 20,
-    });
+        limit: 20,
+        offset: (page - 1) * 20,
+      });
+    }
+
+    await CachePet.save('pets-list', pets);
 
     return res.json(pets);
   }
@@ -79,6 +87,8 @@ class PetsController {
       user_id: req.userId,
     });
 
+    await CachePet.invalidatePrefix('pets-list');
+
     return res.json(pet);
   }
 
@@ -115,6 +125,8 @@ class PetsController {
 
     await pet.update(req.body);
 
+    await CachePet.invalidatePrefix('pets-list');
+
     return res.json(pet);
   }
 
@@ -130,6 +142,8 @@ class PetsController {
     }
 
     await pet.destroy();
+
+    await CachePet.invalidatePrefix('pets-list');
 
     return res.status(204).send();
   }
