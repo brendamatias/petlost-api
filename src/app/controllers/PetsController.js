@@ -2,11 +2,41 @@ import * as Yup from 'yup';
 import { Op } from 'sequelize';
 
 import Pet from '../models/Pet';
+import File from '../models/File';
+import Petfile from '../models/Petfile';
 import Address from '../models/Address';
 
 class PetsController {
   async index(req, res) {
-    const pets = await Pet.findAll({ where: { user_id: { [Op.ne]: null } } });
+    const { page = 1, filters = '' } = req.query;
+
+    const pets = await Pet.findAll({
+      include: [
+        {
+          model: Address,
+          as: 'address',
+          attributes: ['id', 'city', 'state'],
+        },
+        {
+          model: Petfile,
+          as: 'files',
+          attributes: ['id', 'file_id'],
+          include: [
+            {
+              model: File,
+              as: 'file',
+              attributes: ['id', 'url', 'path'],
+            },
+          ],
+        },
+      ],
+      where: {
+        user_id: { [Op.ne]: null },
+        filters: { [Op.like]: `%${filters}%` },
+      },
+      limit: 20,
+      offset: (page - 1) * 20,
+    });
 
     return res.json(pets);
   }

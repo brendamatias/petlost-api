@@ -7,6 +7,7 @@ import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
 import AddressController from './app/controllers/AddressController';
 import PetsController from './app/controllers/PetsController';
+import PetfilesController from './app/controllers/PetfilesController';
 
 import MessageController from './app/controllers/MessageController';
 import KeyController from './app/controllers/KeyController';
@@ -42,6 +43,9 @@ routes.get('/pets/:id', PetsController.show);
 routes.post('/pets', PetsController.store);
 routes.put('/pets/:id', PetsController.update);
 routes.delete('/pets/:id', PetsController.delete);
+
+/* Pet files */
+routes.post('/pets/:id/files', upload.single('file'), PetfilesController.store);
 /* ------- */
 
 routes.get('/messages', MessageController.index);
