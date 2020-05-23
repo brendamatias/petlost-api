@@ -21,15 +21,15 @@ const upload = multer(multerConfig);
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
+routes.post('/password/forgot', ForgotPassword.store);
+routes.put('/password/reset', ForgotPassword.update);
+
 routes.use(authMiddleware);
 
 /* Users */
 routes.get('/users/:id', UserController.show);
 routes.put('/users', UserController.update);
 /* ---- */
-
-routes.post('/password/forgot', ForgotPassword.store);
-routes.put('/password/reset', ForgotPassword.update);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
