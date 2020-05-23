@@ -1,7 +1,9 @@
 import crypto from 'crypto';
 
 import User from '../models/User';
-import Mail from '../../lib/Mail';
+
+import ForgotPasswordMail from '../jobs/ForgotPasswordMail';
+import Queue from '../../lib/Queue';
 
 class ForgotPassword {
   async store(req, res) {
@@ -22,14 +24,11 @@ class ForgotPassword {
       token_created_at: new Date(),
     });
 
-    Mail.sendMail({
-      to: `${user.name} <${email}>`,
-      subject: 'Recuperação de senha',
-      template: 'forgot',
-      context: {
-        user: user.name,
-        link: `${redirect_url}?token=${token}`,
-      },
+    await Queue.add(ForgotPasswordMail.key, {
+      name: user.name,
+      email,
+      redirect_url,
+      token,
     });
 
     return res.json(user);
