@@ -5,7 +5,7 @@ import Mail from '../../lib/Mail';
 
 class ForgotPassword {
   async store(req, res) {
-    const { email } = req.body;
+    const { email, redirect_url } = req.body;
 
     const user = await User.findOne({
       where: { email },
@@ -22,10 +22,14 @@ class ForgotPassword {
       token_created_at: new Date(),
     });
 
-    await Mail.sendMail({
+    Mail.sendMail({
       to: `${user.name} <${email}>`,
       subject: 'Recuperação de senha',
-      text: 'Pedido de recuperação de senha recebido.',
+      template: 'forgot',
+      context: {
+        user: user.name,
+        link: `${redirect_url}?token=${token}`,
+      },
     });
 
     return res.json(user);
