@@ -29,6 +29,7 @@ routes.put('/users', UserController.update);
 /* ---- */
 
 routes.post('/password/forgot', ForgotPassword.store);
+routes.put('/password/reset', ForgotPassword.update);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
