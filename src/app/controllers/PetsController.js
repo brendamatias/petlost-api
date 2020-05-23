@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { Op } from 'sequelize';
 
-import CachePet from '../lib/CachePet';
+import CachePet from '../../lib/CachePet';
 
 import Pet from '../models/Pet';
 import File from '../models/File';

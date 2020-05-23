@@ -1,5 +1,5 @@
 import Redis from 'ioredis';
-import cacheConfig from '../../config/cache';
+import cacheConfig from '../config/cache';
 
 const client = new Redis(cacheConfig.config.redis);
 

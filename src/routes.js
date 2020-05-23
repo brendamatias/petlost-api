@@ -3,6 +3,7 @@ import multer from 'multer';
 import multerConfig from './config/multer';
 
 import UserController from './app/controllers/UserController';
+import ForgotPassword from './app/controllers/ForgotPassword';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
 import AddressController from './app/controllers/AddressController';
@@ -26,6 +27,8 @@ routes.use(authMiddleware);
 routes.get('/users/:id', UserController.show);
 routes.put('/users', UserController.update);
 /* ---- */
+
+routes.post('/password/forgot', ForgotPassword.store);
 
 routes.post('/files', upload.single('file'), FileController.store);
 

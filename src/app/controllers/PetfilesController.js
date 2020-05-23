@@ -1,7 +1,7 @@
 import File from '../models/File';
 import Petfile from '../models/Petfile';
 
-import CachePet from '../lib/CachePet';
+import CachePet from '../../lib/CachePet';
 
 class PetfilesController {
   async store(req, res) {
