@@ -9,6 +9,10 @@ class File extends Model {
         url: {
           type: Sequelize.VIRTUAL,
           get() {
+            if (process.env.NODE_ENV === 'production') {
+              return `${process.env.AWS_URL}/${this.path}`;
+            }
+
             return `${process.env.APP_URL}/files/${this.path}`;
           },
         },
