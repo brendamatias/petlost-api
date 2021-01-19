@@ -4,7 +4,7 @@ import multerConfig from './config/multer';
 
 import UserController from './app/controllers/UserController';
 import ForgotPassword from './app/controllers/ForgotPassword';
-import SessionController from './app/controllers/SessionController';
+import AuthController from './app/controllers/AuthController';
 import FileController from './app/controllers/FileController';
 import AddressController from './app/controllers/AddressController';
 import PetsController from './app/controllers/PetsController';
@@ -19,7 +19,7 @@ const routes = new Router();
 const upload = multer(multerConfig);
 
 routes.post('/users', UserController.store);
-routes.post('/sessions', SessionController.store);
+routes.post('/auth', AuthController.store);
 
 routes.post('/password/forgot', ForgotPassword.store);
 routes.put('/password/reset', ForgotPassword.update);
