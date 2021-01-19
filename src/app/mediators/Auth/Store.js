@@ -5,6 +5,7 @@ import User from '../../models/User';
 import File from '../../models/File';
 
 import authConfig from '../../../config/auth';
+import responses from '../../../config/httpResponses';
 
 module.exports = async ({ email, password }, res) => {
   const schema = Yup.object({
@@ -35,16 +36,9 @@ module.exports = async ({ email, password }, res) => {
     return res.status(401).json({ error: 'Password does not match.' });
   }
 
-  const { id, name, avatar } = user;
-
-  return res.json({
-    user: {
-      id,
-      name,
-      email,
-      avatar,
-    },
-    token: jwt.sign({ id }, authConfig.secret, {
+  return responses.created({
+    user,
+    token: jwt.sign({ id: user.id }, authConfig.secret, {
       expiresIn: authConfig.expiresIn,
     }),
   });
