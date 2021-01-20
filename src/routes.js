@@ -33,12 +33,12 @@ routes.put('/users/:id', UserController.update);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
-/* Addresses */
-routes.get('/addresses', AddressController.index);
-routes.get('/addresses/:id', AddressController.show);
-routes.post('/addresses', AddressController.store);
-routes.put('/addresses/:id', AddressController.update);
-routes.delete('/addresses/:id', AddressController.delete);
+/* Adresses */
+routes.get('/adresses', AddressController.index);
+routes.get('/adresses/:id', AddressController.show);
+routes.post('/adresses', AddressController.store);
+routes.put('/adresses/:id', AddressController.update);
+routes.delete('/adresses/:id', AddressController.delete);
 /* ------- */
 
 /* Pets */

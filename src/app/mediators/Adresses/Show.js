@@ -1,17 +1,16 @@
-import User from '../../models/User';
-
+import Address from '../../models/Address';
 import responses from '../../../config/httpResponses';
 import BaseException from '../../exceptions/CustomException';
 
 module.exports = async (id) => {
   try {
-    const user = await User.findByPk(id);
+    const address = await Address.findByPk(id);
 
-    if (!user) {
-      throw new BaseException('USER_NOT_FOUND');
+    if (!address) {
+      throw new BaseException('ADDRESS_NOT_FOUND');
     }
 
-    return responses.ok(user);
+    return responses.ok(address);
   } catch (err) {
     return responses.customError(err);
   }

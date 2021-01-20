@@ -7,6 +7,10 @@ export default {
     status: 404,
     message: 'Usuário não encontrado.',
   },
+  ADDRESS_NOT_FOUND: {
+    status: 404,
+    message: 'Endereço não encontrado.',
+  },
   PASSWORD_INCORRECT: {
     status: 401,
     message: 'Senha incorreta.',
@@ -18,5 +22,9 @@ export default {
   PASSWORD_DOES_NOT_MATCH: {
     status: 401,
     message: 'Senha anterior incorreta',
+  },
+  UNAUTHORIZED_USER: {
+    status: 401,
+    message: 'Usuário não autorizado',
   },
 };
