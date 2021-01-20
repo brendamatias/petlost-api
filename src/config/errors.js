@@ -11,6 +11,10 @@ export default {
     status: 404,
     message: 'Endereço não encontrado.',
   },
+  PET_NOT_FOUND: {
+    status: 404,
+    message: 'Pet não encontrado.',
+  },
   PASSWORD_INCORRECT: {
     status: 401,
     message: 'Senha incorreta.',

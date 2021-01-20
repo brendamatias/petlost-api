@@ -1,151 +1,38 @@
-import * as Yup from 'yup';
-import { Op } from 'sequelize';
-
-import CachePet from '../../lib/CachePet';
-
-import Pet from '../models/Pet';
-import File from '../models/File';
-import Petfile from '../models/Petfile';
-import Address from '../models/Address';
+import mediator from '../mediators/Pets';
 
 class PetsController {
   async index(req, res) {
-    let pets = await CachePet.recover('pets-list');
+    const { status, data } = await mediator.All(req.query);
 
-    if (!pets) {
-      const { page = 1, filters = '' } = req.query;
-
-      pets = await Pet.findAll({
-        include: [
-          {
-            model: Address,
-            as: 'address',
-            attributes: ['id', 'city', 'state'],
-          },
-          {
-            model: Petfile,
-            as: 'files',
-            attributes: ['id', 'file_id'],
-            include: [
-              {
-                model: File,
-                as: 'file',
-                attributes: ['id', 'url', 'path'],
-              },
-            ],
-          },
-        ],
-        where: {
-          user_id: { [Op.ne]: null },
-          filters: { [Op.like]: `%${filters}%` },
-        },
-        limit: 20,
-        offset: (page - 1) * 20,
-      });
-    }
-
-    await CachePet.save('pets-list', pets);
-
-    return res.json(pets);
+    return res.status(status).json(data);
   }
 
   async show(req, res) {
-    const pet = await Pet.findByPk(req.params.id);
+    const { status, data } = await mediator.Show(req.params.id);
 
-    if (!pet) {
-      return res.status(404).json({ error: 'Pet not found.' });
-    }
-
-    return res.json(pet);
+    return res.status(status).json(data);
   }
 
   async store(req, res) {
-    const schema = Yup.object({
-      name: Yup.string().required(),
-      filters: Yup.string().required(),
-      address_id: Yup.number().required(),
-    });
+    const { status, data } = await mediator.Store(req.userId, req.body);
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails.' });
-    }
-
-    const { name, filters, address_id } = req.body;
-
-    const addressExists = await Address.findOne({
-      where: { id: address_id },
-    });
-
-    if (!addressExists) {
-      return res.status(400).json({ error: 'Address not found.' });
-    }
-
-    const pet = await Pet.create({
-      name,
-      filters,
-      address_id,
-      user_id: req.userId,
-    });
-
-    await CachePet.invalidatePrefix('pets-list');
-
-    return res.json(pet);
+    return res.status(status).json(data);
   }
 
   async update(req, res) {
-    const schema = Yup.object({
-      name: Yup.string(),
-      filters: Yup.string(),
-      address_id: Yup.number(),
-    });
+    const { status, data } = await mediator.Update(
+      req.params.id,
+      req.userId,
+      req.body
+    );
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails.' });
-    }
-
-    const pet = await Pet.findByPk(req.params.id);
-
-    if (!pet) {
-      return res.status(404).json({ error: 'Pet not found.' });
-    }
-
-    if (pet.user_id !== req.userId) {
-      return res.status(401).json({ error: 'Unauthorized user.' });
-    }
-
-    if (req.body.address_id) {
-      const addressExists = await Address.findOne({
-        where: { id: req.body.address_id },
-      });
-
-      if (!addressExists) {
-        return res.status(400).json({ error: 'Address not found.' });
-      }
-    }
-
-    await pet.update(req.body);
-
-    await CachePet.invalidatePrefix('pets-list');
-
-    return res.json(pet);
+    return res.status(status).json(data);
   }
 
   async delete(req, res) {
-    const pet = await Pet.findByPk(req.params.id);
+    const { status, data } = await mediator.Delete(req.params.id, req.userId);
 
-    if (!pet) {
-      return res.status(404).json({ error: 'Pet not found.' });
-    }
-
-    if (pet.user_id !== req.userId) {
-      return res.status(401).json({ error: 'Unauthorized user.' });
-    }
-
-    await pet.destroy();
-
-    await CachePet.invalidatePrefix('pets-list');
-
-    return res.status(204).send();
+    return res.status(status).json(data);
   }
 }
 
