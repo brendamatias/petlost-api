@@ -1,7 +1,12 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
-const PROTECTED_ATTRIBUTES = ['password_hash', 'createdAt', 'updatedAt'];
+const PROTECTED_ATTRIBUTES = [
+  'password',
+  'password_hash',
+  'createdAt',
+  'updatedAt',
+];
 
 class User extends Model {
   toJSON() {

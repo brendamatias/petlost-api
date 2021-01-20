@@ -27,4 +27,12 @@ export default {
     status: 401,
     message: 'Usuário não autorizado',
   },
+  TOKEN_INVALID: {
+    status: 404,
+    message: 'Token inválido',
+  },
+  TOKEN_EXPIRED: {
+    status: 401,
+    message: 'Token expirado',
+  },
 };
