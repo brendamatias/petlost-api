@@ -20,4 +20,17 @@ const forbidden = (message = undefined) => ({
   data: { code: 'FORBIDDEN', message },
 });
 
-export default { okPaginated, ok, created, noContent, notFound, forbidden };
+const customError = ({ status, code, message }) => ({
+  status,
+  data: { error: { code, message } },
+});
+
+export default {
+  okPaginated,
+  ok,
+  created,
+  noContent,
+  notFound,
+  forbidden,
+  customError,
+};

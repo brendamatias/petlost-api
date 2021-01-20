@@ -1,7 +1,21 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
+const PROTECTED_ATTRIBUTES = ['password_hash', 'createdAt', 'updatedAt'];
+
 class User extends Model {
+  toJSON() {
+    const attributes = {
+      ...this.get(),
+    };
+
+    PROTECTED_ATTRIBUTES.forEach((protectedAttribute) => {
+      delete attributes[protectedAttribute];
+    });
+
+    return attributes;
+  }
+
   static init(sequelize) {
     super.init(
       {
