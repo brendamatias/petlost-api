@@ -1,15 +1,10 @@
-import File from '../models/File';
+import mediator from '../mediators/Files';
 
 class FileController {
   async store(req, res) {
-    const { originalname: name, key } = req.file;
+    const { status, data } = await mediator.Store(req.file);
 
-    const file = await File.create({
-      name,
-      path: key,
-    });
-
-    return res.json(file);
+    return res.status(status).json(data);
   }
 }
 
