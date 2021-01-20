@@ -1,26 +1,11 @@
-import File from '../models/File';
-import Petfile from '../models/Petfile';
+import mediator from '../mediators/PetFiles';
 
-import CachePet from '../../lib/CachePet';
-
-class PetfileController {
+class PetFileController {
   async store(req, res) {
-    const { originalname: name, filename: path } = req.file;
+    const { status, data } = await mediator.Store(req.params.id, req.file);
 
-    const file = await File.create({
-      name,
-      path,
-    });
-
-    const petFile = await Petfile.create({
-      pet_id: req.params.id,
-      file_id: file.id,
-    });
-
-    await CachePet.invalidatePrefix('pets-list');
-
-    return res.json(petFile);
+    return res.status(status).json(data);
   }
 }
 
-export default new PetfileController();
+export default new PetFileController();

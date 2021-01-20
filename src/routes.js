@@ -8,7 +8,7 @@ import AuthController from './app/controllers/AuthController';
 import FileController from './app/controllers/FileController';
 import AddressController from './app/controllers/AddressController';
 import PetController from './app/controllers/PetController';
-import PetfileController from './app/controllers/PetfileController';
+import PetFileController from './app/controllers/PetFileController';
 
 import MessageController from './app/controllers/MessageController';
 import KeyController from './app/controllers/KeyController';
@@ -49,7 +49,7 @@ routes.put('/pets/:id', PetController.update);
 routes.delete('/pets/:id', PetController.delete);
 
 /* Pet files */
-routes.post('/pets/:id/files', upload.single('file'), PetfileController.store);
+routes.post('/pets/:id/files', upload.single('file'), PetFileController.store);
 /* ------- */
 
 routes.get('/messages', MessageController.index);
