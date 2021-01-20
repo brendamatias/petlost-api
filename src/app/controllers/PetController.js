@@ -1,6 +1,6 @@
 import mediator from '../mediators/Pets';
 
-class PetsController {
+class PetController {
   async index(req, res) {
     const { status, data } = await mediator.All(req.query);
 
@@ -36,4 +36,4 @@ class PetsController {
   }
 }
 
-export default new PetsController();
+export default new PetController();

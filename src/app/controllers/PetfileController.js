@@ -3,7 +3,7 @@ import Petfile from '../models/Petfile';
 
 import CachePet from '../../lib/CachePet';
 
-class PetfilesController {
+class PetfileController {
   async store(req, res) {
     const { originalname: name, filename: path } = req.file;
 
@@ -23,4 +23,4 @@ class PetfilesController {
   }
 }
 
-export default new PetfilesController();
+export default new PetfileController();

@@ -7,8 +7,8 @@ import PasswordController from './app/controllers/PasswordController';
 import AuthController from './app/controllers/AuthController';
 import FileController from './app/controllers/FileController';
 import AddressController from './app/controllers/AddressController';
-import PetsController from './app/controllers/PetsController';
-import PetfilesController from './app/controllers/PetfilesController';
+import PetController from './app/controllers/PetController';
+import PetfileController from './app/controllers/PetfileController';
 
 import MessageController from './app/controllers/MessageController';
 import KeyController from './app/controllers/KeyController';
@@ -42,14 +42,14 @@ routes.delete('/adresses/:id', AddressController.delete);
 /* ------- */
 
 /* Pets */
-routes.get('/pets', PetsController.index);
-routes.get('/pets/:id', PetsController.show);
-routes.post('/pets', PetsController.store);
-routes.put('/pets/:id', PetsController.update);
-routes.delete('/pets/:id', PetsController.delete);
+routes.get('/pets', PetController.index);
+routes.get('/pets/:id', PetController.show);
+routes.post('/pets', PetController.store);
+routes.put('/pets/:id', PetController.update);
+routes.delete('/pets/:id', PetController.delete);
 
 /* Pet files */
-routes.post('/pets/:id/files', upload.single('file'), PetfilesController.store);
+routes.post('/pets/:id/files', upload.single('file'), PetfileController.store);
 /* ------- */
 
 routes.get('/messages', MessageController.index);
