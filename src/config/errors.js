@@ -11,4 +11,12 @@ export default {
     status: 401,
     message: 'Senha incorreta.',
   },
+  USER_ALREADY_CREATED: {
+    status: 400,
+    message: 'Usuário já cadastrado',
+  },
+  PASSWORD_DOES_NOT_MATCH: {
+    status: 401,
+    message: 'Senha anterior incorreta',
+  },
 };
