@@ -1,12 +1,15 @@
-import 'dotenv/config';
+/* eslint-disable */
+require('dotenv').config({
+  path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+});
 
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+
+
 import routes from './routes';
-
 import rateLimiter from './app/middlewares/rateLimiter';
-
 import './database';
 
 class App {
