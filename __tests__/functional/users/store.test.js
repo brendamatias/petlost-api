@@ -1,14 +1,15 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import faker from 'faker';
-import redis from '../../../src/redis';
+
 import app from '../../../src/app';
 import factory from '../../factories';
+import shutdownRedis from '../../shutdownRedis';
 
 describe('Authentication', () => {
   afterAll(async (done) => {
     await mongoose.disconnect();
-    redis.quit();
+    await shutdownRedis();
     done();
   });
 

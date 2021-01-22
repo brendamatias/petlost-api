@@ -17,7 +17,10 @@ class App {
   }
 
   middlewares() {
-    this.server.use(rateLimiter);
+    if (process.env.NODE_ENV === 'production') {
+      this.server.use(rateLimiter);
+    }
+
     this.server.use(cors());
     this.server.use(express.json());
     this.server.use(

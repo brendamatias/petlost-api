@@ -10,9 +10,7 @@ const limiter = new RateLimiterRedis({
 
 async function rateLimiter(req, res, next) {
   try {
-    if (process.env.NODE_ENV === 'production') {
-      await limiter.consume(req.ip);
-    }
+    await limiter.consume(req.ip);
 
     return next();
   } catch (err) {
