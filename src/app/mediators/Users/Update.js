@@ -7,10 +7,15 @@ import responses from '../../../config/httpResponses';
 import BaseException from '../../exceptions/CustomException';
 
 module.exports = async (
-  userId,
+  currentUserId,
+  id,
   { name, email, oldPassword, password, confirmPassword }
 ) => {
   try {
+    if (currentUserId.toString() !== id) {
+      throw new BaseException('UNAUTHORIZED_USER');
+    }
+
     const schema = Yup.object({
       name: Yup.string(),
       email: Yup.string().email(),
@@ -37,13 +42,13 @@ module.exports = async (
       throw new BaseException('VALIDATION_FAILS');
     }
 
-    let user = await User.findByPk(userId);
+    let user = await User.findByPk(id);
 
     if (!user) {
       throw new BaseException('USER_NOT_FOUND');
     }
 
-    if (email !== user.email) {
+    if (email && email !== user.email) {
       const userExists = await User.findOne({
         where: { email },
       });
@@ -54,12 +59,12 @@ module.exports = async (
     }
 
     if (oldPassword && !(await user.checkPassword(oldPassword))) {
-      throw new BaseException('USER_ALREADY_CREATED');
+      throw new BaseException('PASSWORD_DOES_NOT_MATCH');
     }
 
     await user.update({ name, email, password });
 
-    user = await User.findByPk(userId, {
+    user = await User.findByPk(id, {
       include: [
         {
           model: File,
@@ -71,6 +76,6 @@ module.exports = async (
 
     return responses.ok(user);
   } catch (err) {
-    return responses.customError(err);
+    throw err.name === 'CustomException' ? err : new Error(err);
   }
 };

@@ -6,6 +6,8 @@ import path from 'path';
 
 import routes from './routes';
 import rateLimiter from './app/middlewares/rateLimiter';
+import handleErrors from './app/middlewares/handleErrors';
+
 import './database';
 
 class App {
@@ -14,6 +16,8 @@ class App {
 
     this.middlewares();
     this.routes();
+
+    this.server.use(handleErrors);
   }
 
   middlewares() {

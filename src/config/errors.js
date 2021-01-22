@@ -1,4 +1,8 @@
 export default {
+  INTERNAL_SERVER_ERROR: {
+    status: 500,
+    message: 'Ops, ocorreu um erro interno, tente novamente mais tarde',
+  },
   VALIDATION_FAILS: {
     status: 401,
     message: 'Validação falhou.',

@@ -1,6 +1,6 @@
 import ErrorList from '../../config/errors';
 
-export default class CustomException extends Error {
+class CustomException extends Error {
   constructor(code, customMessage) {
     const { status, message } = ErrorList[`${code}`];
 
@@ -9,6 +9,10 @@ export default class CustomException extends Error {
     this.status = status;
     this.code = code;
     this.message = customMessage || message;
+    this.name = 'CustomException';
+
     Error.captureStackTrace(this, this.constructor);
   }
 }
+
+module.exports = CustomException;

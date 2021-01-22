@@ -1,22 +1,38 @@
 import mediator from '../mediators/Users';
 
 class UserController {
-  async show(req, res) {
-    const { status, data } = await mediator.Show(req.params.id);
+  async show(req, res, next) {
+    try {
+      const { status, data } = await mediator.Show(req.params.id);
 
-    return res.status(status).json(data);
+      return res.status(status).json(data);
+    } catch (err) {
+      return next(err);
+    }
   }
 
-  async store(req, res) {
-    const { status, data } = await mediator.Store(req.body);
+  async store(req, res, next) {
+    try {
+      const { status, data } = await mediator.Store(req.body);
 
-    return res.status(status).json(data);
+      return res.status(status).json(data);
+    } catch (err) {
+      return next(err);
+    }
   }
 
-  async update(req, res) {
-    const { status, data } = await mediator.Update(req.userId, req.body);
+  async update(req, res, next) {
+    try {
+      const { status, data } = await mediator.Update(
+        req.userId,
+        req.params.id,
+        req.body
+      );
 
-    return res.status(status).json(data);
+      return res.status(status).json(data);
+    } catch (err) {
+      return next(err);
+    }
   }
 }
 
