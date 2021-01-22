@@ -48,6 +48,16 @@ describe('Authentication', () => {
     expect(response.status).toBe(401);
   });
 
+  it('should not create a user with a password less than 6 characters', async () => {
+    const response = await request(app).post('/users').send({
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password: '123',
+    });
+
+    expect(response.status).toBe(401);
+  });
+
   it('should not create a user without name', async () => {
     const response = await request(app).post('/users').send({
       name: '',
