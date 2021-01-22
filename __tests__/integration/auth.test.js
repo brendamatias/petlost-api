@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import app from '../../src/app';
 
 import factory from '../factories';
-import shutdownRedis from '../shutdownRedis';
+import shutdownRedis from '../utils/shutdownRedis';
 
 describe('Authentication', () => {
   let user = null;

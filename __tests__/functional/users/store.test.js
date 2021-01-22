@@ -4,9 +4,9 @@ import faker from 'faker';
 
 import app from '../../../src/app';
 import factory from '../../factories';
-import shutdownRedis from '../../shutdownRedis';
+import shutdownRedis from '../../utils/shutdownRedis';
 
-describe('Authentication', () => {
+describe('Store user', () => {
   afterAll(async (done) => {
     await mongoose.disconnect();
     await shutdownRedis();

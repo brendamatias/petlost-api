@@ -1,4 +1,4 @@
-import redis from '../src/redis';
+import redis from '../../src/redis';
 
 export default async () => {
   await new Promise((resolve) => {
