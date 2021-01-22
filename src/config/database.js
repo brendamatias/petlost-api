@@ -6,7 +6,8 @@ module.exports = {
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
   dialect: process.env.DB_DIALECT || 'postgres',
-  operatorsAliases: false,
+  operatorsAliases: 0,
+  logging: false,
   define: {
     timestamps: true,
     underscored: true,

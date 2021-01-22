@@ -1,5 +1,6 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
+import redis from '../../src/redis';
 import app from '../../src/app';
 
 import factory from '../factories';
@@ -13,6 +14,7 @@ describe('Authentication', () => {
 
   afterAll(async (done) => {
     await mongoose.disconnect();
+    redis.quit();
     done();
   });
 
