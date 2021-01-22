@@ -1,10 +1,8 @@
-import jwt from 'jsonwebtoken';
 import * as Yup from 'yup';
 
 import User from '../../models/User';
 import File from '../../models/File';
 
-import authConfig from '../../../config/auth';
 import responses from '../../../config/httpResponses';
 import BaseException from '../../exceptions/CustomException';
 
@@ -35,14 +33,12 @@ module.exports = async ({ email, password }) => {
     }
 
     if (!(await user.checkPassword(password))) {
-      throw new BaseException('PASSWORD_DOES_NOT_MATCH');
+      throw new BaseException('PASSWORD_INCORRECT');
     }
 
     return responses.created({
       user,
-      token: jwt.sign({ id: user.id }, authConfig.secret, {
-        expiresIn: authConfig.expiresIn,
-      }),
+      token: user.generateToken(),
     });
   } catch (err) {
     return responses.customError(err);
