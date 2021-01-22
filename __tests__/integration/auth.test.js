@@ -1,4 +1,5 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 import app from '../../src/app';
 
 import factory from '../factories';
@@ -8,6 +9,11 @@ describe('Authentication', () => {
 
   beforeAll(async () => {
     user = await factory.create('User', { password: '123456' });
+  });
+
+  afterAll(async (done) => {
+    await mongoose.disconnect();
+    done();
   });
 
   it('should receive JWT token when authenticated with valid credentials', async () => {
