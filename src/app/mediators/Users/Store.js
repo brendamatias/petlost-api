@@ -27,6 +27,6 @@ module.exports = async ({ name, email, password }) => {
 
     return responses.created(user);
   } catch (err) {
-    return responses.customError(err);
+    throw err.name === 'CustomException' ? err : new Error(err);
   }
 };
