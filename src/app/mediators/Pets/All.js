@@ -47,6 +47,6 @@ module.exports = async ({ page = 1, filters = '' }) => {
 
     return responses.ok(pets);
   } catch (err) {
-    return responses.customError(err);
+    throw err.name === 'CustomException' ? err : new Error(err);
   }
 };

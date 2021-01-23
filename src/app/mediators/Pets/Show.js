@@ -12,6 +12,6 @@ module.exports = async (id) => {
 
     return responses.ok(pet);
   } catch (err) {
-    return responses.customError(err);
+    throw err.name === 'CustomException' ? err : new Error(err);
   }
 };

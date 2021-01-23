@@ -37,7 +37,7 @@ module.exports = async (userId, { name, filters, address_id }) => {
     await CachePet.invalidatePrefix('pets-list');
 
     return responses.created(pet);
-  } catch(err) {
-    return responses.customError(err);
+  } catch (err) {
+    throw err.name === 'CustomException' ? err : new Error(err);
   }
-}
+};

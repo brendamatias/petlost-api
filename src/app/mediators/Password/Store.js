@@ -34,6 +34,6 @@ module.exports = async ({ email, redirect_url }) => {
 
     return responses.ok(user);
   } catch (err) {
-    return responses.customError(err);
+    throw err.name === 'CustomException' ? err : new Error(err);
   }
 };

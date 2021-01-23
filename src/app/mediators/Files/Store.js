@@ -10,6 +10,6 @@ module.exports = async ({ originalname: name, key }) => {
 
     return responses.created(file);
   } catch (err) {
-    return responses.customError(err);
+    throw err.name === 'CustomException' ? err : new Error(err);
   }
 };

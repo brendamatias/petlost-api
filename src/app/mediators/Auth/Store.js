@@ -41,6 +41,6 @@ module.exports = async ({ email, password }) => {
       token: user.generateToken(),
     });
   } catch (err) {
-    return responses.customError(err);
+    throw err.name === 'CustomException' ? err : new Error(err);
   }
 };

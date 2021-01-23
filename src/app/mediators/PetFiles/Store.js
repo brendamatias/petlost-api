@@ -20,6 +20,6 @@ module.exports = async (id, { originalname: name, filename: path }) => {
 
     return responses.created(petFile);
   } catch (err) {
-    return responses.customError(err);
+    throw err.name === 'CustomException' ? err : new Error(err);
   }
 };
