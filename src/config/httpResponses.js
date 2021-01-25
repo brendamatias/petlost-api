@@ -1,10 +1,10 @@
-const okPaginated = ({ total, perPage, currentPage, lastPage, rows }) => ({
+const okPaginated = ({ total, perPage, page, lastPage, rows }) => ({
   status: 200,
   data: {
     pagination: {
       total,
       perPage,
-      currentPage,
+      page,
       lastPage,
     },
     data: rows,
