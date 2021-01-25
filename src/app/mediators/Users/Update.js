@@ -1,21 +1,16 @@
 import * as Yup from 'yup';
 
 import User from '../../models/User';
-import File from '../../models/File';
 
 import responses from '../../../config/httpResponses';
 import BaseException from '../../exceptions/CustomException';
 
 module.exports = async (
-  currentUserId,
-  id,
+  userId,
+  file,
   { name, email, oldPassword, password, confirmPassword }
 ) => {
   try {
-    if (currentUserId.toString() !== id) {
-      throw new BaseException('UNAUTHORIZED_USER');
-    }
-
     const schema = Yup.object({
       name: Yup.string(),
       email: Yup.string().email(),
@@ -42,7 +37,7 @@ module.exports = async (
       throw new BaseException('VALIDATION_FAILS');
     }
 
-    let user = await User.findByPk(id);
+    const user = await User.findByPk(userId);
 
     if (!user) {
       throw new BaseException('USER_NOT_FOUND');
@@ -62,20 +57,18 @@ module.exports = async (
       throw new BaseException('PASSWORD_DOES_NOT_MATCH');
     }
 
-    await user.update({ name, email, password });
+    let avatar = user.avatar || null;
 
-    user = await User.findByPk(id, {
-      include: [
-        {
-          model: File,
-          as: 'avatar',
-          attributes: ['id', 'path', 'url'],
-        },
-      ],
-    });
+    if (file) {
+      avatar = file.key;
+    }
+
+    await user.update({ name, email, password, avatar });
 
     return responses.ok(user);
   } catch (err) {
+    // TO DO - remover file
+
     throw err.name === 'CustomException' ? err : new Error(err);
   }
 };

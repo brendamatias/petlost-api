@@ -25,7 +25,7 @@ class UserController {
     try {
       const { status, data } = await mediator.Update(
         req.userId,
-        req.params.id,
+        req.file,
         req.body
       );
 

@@ -9,6 +9,7 @@ const PROTECTED_ATTRIBUTES = [
   'password_hash',
   'createdAt',
   'updatedAt',
+  'avatar',
 ];
 
 class User extends Model {
@@ -33,6 +34,21 @@ class User extends Model {
         password_hash: Sequelize.STRING,
         token: Sequelize.STRING,
         token_created_at: Sequelize.DATE,
+        avatar: Sequelize.STRING,
+        avatar_url: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            if (this.avatar) {
+              if (process.env.NODE_ENV === 'production') {
+                return `${process.env.AWS_URL}/${this.avatar}`;
+              }
+
+              return `${process.env.APP_URL}/files/${this.avatar}`;
+            }
+
+            return this.avatar;
+          },
+        },
       },
       {
         sequelize,
@@ -46,10 +62,6 @@ class User extends Model {
     });
 
     return this;
-  }
-
-  static associate(models) {
-    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
   }
 
   checkPassword(password) {

@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 
 import User from '../../models/User';
-import File from '../../models/File';
 
 import responses from '../../../config/httpResponses';
 import BaseException from '../../exceptions/CustomException';
@@ -19,13 +18,6 @@ module.exports = async ({ email, password }) => {
 
     const user = await User.findOne({
       where: { email },
-      include: [
-        {
-          model: File,
-          as: 'avatar',
-          attributes: ['id', 'path', 'url'],
-        },
-      ],
     });
 
     if (!user) {

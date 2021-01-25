@@ -20,6 +20,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      avatar: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       token: {
         type: Sequelize.STRING,
         allowNull: true,

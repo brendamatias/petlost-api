@@ -5,10 +5,8 @@ import multerConfig from './config/multer';
 import UserController from './app/controllers/UserController';
 import PasswordController from './app/controllers/PasswordController';
 import AuthController from './app/controllers/AuthController';
-import FileController from './app/controllers/FileController';
 import AddressController from './app/controllers/AddressController';
 import PetController from './app/controllers/PetController';
-import PetFileController from './app/controllers/PetFileController';
 
 import MessageController from './app/controllers/MessageController';
 import KeyController from './app/controllers/KeyController';
@@ -28,10 +26,8 @@ routes.use(authMiddleware);
 
 /* Users */
 routes.get('/users/:id', UserController.show);
-routes.put('/users/:id', UserController.update);
+routes.put('/users', upload.single('avatar'), UserController.update);
 /* ---- */
-
-routes.post('/files', upload.single('file'), FileController.store);
 
 /* Adresses */
 routes.get('/adresses', AddressController.index);
@@ -44,13 +40,9 @@ routes.delete('/adresses/:id', AddressController.delete);
 /* Pets */
 routes.get('/pets', PetController.index);
 routes.get('/pets/:id', PetController.show);
-routes.post('/pets', PetController.store);
+routes.post('/pets', upload.array('file', 3), PetController.store);
 routes.put('/pets/:id', PetController.update);
 routes.delete('/pets/:id', PetController.delete);
-
-/* Pet files */
-routes.post('/pets/:id/files', upload.single('file'), PetFileController.store);
-/* ------- */
 
 routes.get('/messages', MessageController.index);
 routes.get('/messages/:id', MessageController.show);
