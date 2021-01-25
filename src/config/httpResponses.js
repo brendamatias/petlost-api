@@ -20,11 +20,6 @@ const forbidden = (message = undefined) => ({
   data: { code: 'FORBIDDEN', message },
 });
 
-const customError = ({ status, code, message }) => ({
-  status,
-  data: { error: { code, message } },
-});
-
 export default {
   okPaginated,
   ok,
@@ -32,5 +27,4 @@ export default {
   noContent,
   notFound,
   forbidden,
-  customError,
 };

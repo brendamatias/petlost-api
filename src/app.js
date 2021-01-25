@@ -7,6 +7,7 @@ import path from 'path';
 import routes from './routes';
 import rateLimiter from './app/middlewares/rateLimiter';
 import handleErrors from './app/middlewares/handleErrors';
+import routeLogger from './app/middlewares/routeLogger';
 
 import './database';
 
@@ -15,6 +16,8 @@ class App {
     this.server = express();
 
     this.middlewares();
+
+    this.server.use(routeLogger);
     this.routes();
 
     this.server.use(handleErrors);
