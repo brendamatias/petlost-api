@@ -7,15 +7,16 @@ import CachePet from '../../../lib/CachePet';
 import responses from '../../../config/httpResponses';
 import BaseException from '../../exceptions/CustomException';
 
-module.exports = async (id, userId, { name, filters, address_id }) => {
+module.exports = async (id, userId, { name, type, situation, address_id }) => {
   try {
     const schema = Yup.object({
       name: Yup.string(),
-      filters: Yup.string(),
+      type: Yup.string().required(),
+      situation: Yup.string().required(),
       address_id: Yup.number(),
     });
 
-    if (!(await schema.isValid({ name, filters, address_id }))) {
+    if (!(await schema.isValid({ name, type, situation, address_id }))) {
       throw new BaseException('VALIDATION_FAILS');
     }
 
@@ -39,7 +40,7 @@ module.exports = async (id, userId, { name, filters, address_id }) => {
       }
     }
 
-    await pet.update({ name, filters, address_id });
+    await pet.update({ name, type, situation, address_id });
 
     await CachePet.invalidatePrefix('pets-list');
 
