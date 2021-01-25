@@ -7,6 +7,15 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      path: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
       pet_id: {
         type: Sequelize.INTEGER,
         references: {
@@ -15,16 +24,6 @@ module.exports = {
           onUpdate: 'CASCADE',
           onDelete: 'SET NULL',
           allowNull: true,
-        },
-      },
-      file_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'files',
-          key: 'id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-          allowNull: false,
         },
       },
       created_at: {

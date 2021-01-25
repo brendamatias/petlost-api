@@ -23,7 +23,11 @@ class PetController {
 
   async store(req, res, next) {
     try {
-      const { status, data } = await mediator.Store(req.userId, req.body);
+      const { status, data } = await mediator.Store(
+        req.userId,
+        req.body,
+        req.files
+      );
 
       return res.status(status).json(data);
     } catch (err) {
