@@ -11,8 +11,8 @@ module.exports = async (id, userId, { name, type, situation, address_id }) => {
   try {
     const schema = Yup.object({
       name: Yup.string(),
-      type: Yup.string().required(),
-      situation: Yup.string().required(),
+      type: Yup.string(),
+      situation: Yup.string(),
       address_id: Yup.number(),
     });
 

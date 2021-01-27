@@ -8,7 +8,7 @@ import Queue from '../../../lib/Queue';
 import responses from '../../../config/httpResponses';
 import BaseException from '../../exceptions/CustomException';
 
-module.exports = async ({ email, redirect_url }) => {
+module.exports = async ({ email }) => {
   try {
     const user = await User.findOne({
       where: { email },
@@ -28,11 +28,11 @@ module.exports = async ({ email, redirect_url }) => {
     await Queue.add(ForgotPasswordMail.key, {
       name: user.name,
       email,
-      redirect_url,
+      redirect_url: `${process.env.WEB_URL}/reset-password`,
       token,
     });
 
-    return responses.ok(user);
+    return responses.noContent();
   } catch (err) {
     throw err.name === 'CustomException' ? err : new Error(err);
   }

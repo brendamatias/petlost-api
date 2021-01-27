@@ -9,6 +9,7 @@ class ForgotPasswordMail {
     const { name, email, redirect_url, token } = data;
 
     await Mail.sendMail({
+      from: 'brendamatias.sobral@gmail.com',
       to: `${name} <${email}>`,
       subject: 'Recuperação de senha',
       template: 'forgot_password',
