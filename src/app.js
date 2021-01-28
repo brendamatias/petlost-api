@@ -3,9 +3,11 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import routes from './routes';
 
+import routes from './routes';
 import rateLimiter from './app/middlewares/rateLimiter';
+import handleErrors from './app/middlewares/handleErrors';
+import routeLogger from './app/middlewares/routeLogger';
 
 import './database';
 
@@ -14,11 +16,18 @@ class App {
     this.server = express();
 
     this.middlewares();
+
+    this.server.use(routeLogger);
     this.routes();
+
+    this.server.use(handleErrors);
   }
 
   middlewares() {
-    this.server.use(rateLimiter);
+    if (process.env.NODE_ENV === 'production') {
+      this.server.use(rateLimiter);
+    }
+
     this.server.use(cors());
     this.server.use(express.json());
     this.server.use(

@@ -1,29 +1,14 @@
-import bcrypt from 'bcryptjs';
-import User from '../models/User';
-import Message from '../schemas/Message';
+import mediator from '../mediators/Keys';
 
 class KeyController {
-  async show(req, res) {
-    const messages = await Message.findOne({
-      $or: [
-        {
-          $and: [{ sender: req.userId }, { recipient: req.params.id }],
-        },
-        {
-          $and: [{ sender: req.params.id }, { recipient: req.userId }],
-        },
-      ],
-    }).sort({ createdAt: 'desc' });
+  async show(req, res, next) {
+    try {
+      const { status, data } = await mediator.Show(req.params.id, req.userId);
 
-    if (!messages) {
-      const { id, name, email } = await User.findByPk(req.userId);
-      const secretText = id + name + email + process.env.APP_SECRET;
-      const key = await bcrypt.hash(secretText, 8);
-
-      return res.json({ key });
+      return res.status(status).json(data);
+    } catch (err) {
+      return next(err);
     }
-
-    return res.json({ key: messages.key });
   }
 }
 

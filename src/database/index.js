@@ -2,14 +2,13 @@ import Sequelize from 'sequelize';
 import mongoose from 'mongoose';
 
 import User from '../app/models/User';
-import File from '../app/models/File';
 import Address from '../app/models/Address';
 import Pet from '../app/models/Pet';
 import Petfile from '../app/models/Petfile';
 
 import databaseConfig from '../config/database';
 
-const models = [User, File, Address, Pet, Petfile];
+const models = [User, Address, Pet, Petfile];
 
 class Database {
   constructor() {
@@ -18,7 +17,7 @@ class Database {
   }
 
   init() {
-    this.connection = new Sequelize(databaseConfig);
+    this.connection = new Sequelize(process.env.DATABASE_URL, databaseConfig);
 
     models
       .map((model) => model.init(this.connection))

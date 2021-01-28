@@ -5,7 +5,13 @@ class Pet extends Model {
     super.init(
       {
         name: Sequelize.STRING,
-        filters: Sequelize.STRING,
+        type: Sequelize.ENUM({
+          values: ['dog', 'cat'],
+        }),
+        situation: Sequelize.ENUM({
+          values: ['adoption', 'disappeared', 'mating'],
+        }),
+        status: Sequelize.BOOLEAN,
       },
       {
         sequelize,
