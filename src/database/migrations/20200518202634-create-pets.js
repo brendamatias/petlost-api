@@ -1,3 +1,5 @@
+const { boolean } = require('yup');
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('pets', {
@@ -11,9 +13,22 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      filters: {
-        type: Sequelize.STRING,
+      type: {
+        type: Sequelize.ENUM({
+          values: ['dog', 'cat'],
+        }),
         allowNull: false,
+      },
+      situation: {
+        type: Sequelize.ENUM({
+          values: ['adoption', 'disappeared', 'mating'],
+        }),
+        allowNull: false,
+      },
+      status: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultTo: true,
       },
       address_id: {
         type: Sequelize.INTEGER,

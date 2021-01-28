@@ -37,10 +37,19 @@ class Mail {
   }
 
   sendMail(message) {
-    return this.transporter.sendMail({
-      ...mailConfig.default,
-      ...message,
-    });
+    return this.transporter.sendMail(
+      {
+        ...mailConfig.default,
+        ...message,
+      },
+      (err, info) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(info);
+        }
+      }
+    );
   }
 }
 
