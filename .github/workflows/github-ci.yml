@@ -18,8 +18,12 @@ jobs:
         node-version: [12.x]
 
     services:
-      - postgres:12-alpine
-      - redis:5.0.5-alpine
+      redis:
+        image: redis
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: root
 
     steps:
       - uses: actions/checkout@v2
@@ -28,28 +32,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
-      - run: npm install
-      - name: Run tests
+        run: npm ci
+        env:
+          NODE_ENV: test
+          PORT: 3333
+          APP_SECRET: y8qjMD4NvL3errgmviyYhdcUyCYrg5VT
+          DATABASE_URL: postgres://postgres:root@postgres:5432/petlostTest
+          REDIS_HOST: redis
+          REDIS_PORT: 6379
+          APP_URL: http://0.0.0.0:3333
+          WEB_URL: http://0.0.0.0:3000
+          STORAGE_TYPE: local
+          S3_BUCKET: petlost-app
+          AWS_URL: https://petlost-app.s3-us-west-1.amazonaws.com
       - run: npm test
-
-      env:
-        NODE_ENV=test
-        PORT=3333
-        APP_SECRET=y8qjMD4NvL3errgmviyYhdcUyCYrg5VT
-
-        DATABASE_URL=postgres://root:root@0.0.0.0:5432/petlostTest
-
-        MONGO_URL=
-
-        REDIS_HOST=0.0.0.0
-        REDIS_PORT=6379
-        REDIS_PASS=
-
-        APP_URL=http://0.0.0.0:3333
-        WEB_URL=http://0.0.0.0:3000
-
-        STORAGE_TYPE=local
-        S3_BUCKET=petlost-app
-        AWS_URL=https://petlost-app.s3-us-west-1.amazonaws.com
-
-
