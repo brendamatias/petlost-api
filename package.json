@@ -11,7 +11,7 @@
     "build": "sucrase ./src -d ./dist --transforms imports",
     "start": "node dist/server.js",
     "pretest": "sequelize db:migrate",
-    "run-tests": "jest",
+    "run-tests": "jest --forceExit",
     "run-after-tests": "sequelize db:migrate:undo:all",
     "test": "npm-run-all run-tests run-after-tests --continue-on-error"
   },

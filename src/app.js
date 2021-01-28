@@ -17,7 +17,10 @@ class App {
 
     this.middlewares();
 
-    this.server.use(routeLogger);
+    if (process.env.NODE_ENV !== 'test') {
+      this.server.use(routeLogger);
+    }
+
     this.routes();
 
     this.server.use(handleErrors);
