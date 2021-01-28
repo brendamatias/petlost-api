@@ -1,5 +1,4 @@
 import request from 'supertest';
-import mongoose from 'mongoose';
 import faker from 'faker';
 
 import app from '../../../src/app';
@@ -19,7 +18,6 @@ describe('Store user', () => {
   });
 
   afterAll(async (done) => {
-    await mongoose.disconnect();
     await shutdownRedis();
     done();
   });

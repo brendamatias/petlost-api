@@ -13,7 +13,6 @@ const models = [User, Address, Pet, Petfile];
 class Database {
   constructor() {
     this.init();
-    this.mongo();
   }
 
   init() {

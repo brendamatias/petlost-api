@@ -1,5 +1,4 @@
 import request from 'supertest';
-import mongoose from 'mongoose';
 
 import app from '../../../src/app';
 import factory from '../../factories';
@@ -15,7 +14,6 @@ describe('Show user', () => {
   });
 
   afterAll(async (done) => {
-    await mongoose.disconnect();
     await shutdownRedis();
     done();
   });
