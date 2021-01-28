@@ -52,7 +52,7 @@ jobs:
           DB_USER: postgres
           DB_PASS: postgres
           DB_NAME: petlostTest
-          REDIS_HOST: redis
+          REDIS_HOST: localhost
           REDIS_PORT: 6379
           APP_URL: http://0.0.0.0:3333
           WEB_URL: http://0.0.0.0:3000
