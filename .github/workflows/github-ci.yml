@@ -64,7 +64,7 @@ jobs:
           APP_URL: http://0.0.0.0:3333
           WEB_URL: http://0.0.0.0:3000
           STORAGE_TYPE: local
-          S3_BUCKET: petlost-app
+          BUCKET_NAME: petlost-app
           AWS_URL: https://petlost-app.s3-us-west-1.amazonaws.com
       - name: Release API
         uses: akhileshns/heroku-deploy@v3.0.4
