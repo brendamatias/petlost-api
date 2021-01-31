@@ -1,8 +1,11 @@
 import mediator from '../mediators/Password';
+import validator from '../validators/Password';
 
 class PasswordController {
   async store(req, res, next) {
     try {
+      await validator.Store(req.body);
+
       const { status, data } = await mediator.Store(req.body);
 
       return res.status(status).json(data);
@@ -13,6 +16,8 @@ class PasswordController {
 
   async update(req, res, next) {
     try {
+      await validator.Update(req.body);
+
       const { status, data } = await mediator.Update(req.body);
 
       return res.status(status).json(data);
