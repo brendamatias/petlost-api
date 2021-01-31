@@ -1,5 +1,3 @@
-import * as Yup from 'yup';
-
 import User from '../../models/User';
 
 import responses from '../../../config/httpResponses';
@@ -7,15 +5,6 @@ import BaseException from '../../exceptions/CustomException';
 
 module.exports = async ({ email, password }) => {
   try {
-    const schema = Yup.object({
-      email: Yup.string().email().required(),
-      password: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid({ email, password }))) {
-      throw new BaseException('VALIDATION_FAILS');
-    }
-
     const user = await User.findOne({
       where: { email },
     });

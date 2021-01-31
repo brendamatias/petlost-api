@@ -1,4 +1,5 @@
 import mediator from '../mediators/Adresses';
+import validator from '../validators/Adresses';
 
 class AddressController {
   async index(req, res, next) {
@@ -23,6 +24,8 @@ class AddressController {
 
   async store(req, res, next) {
     try {
+      await validator.Store(req.body);
+
       const { status, data } = await mediator.Store(req.userId, req.body);
 
       return res.status(status).json(data);
@@ -33,6 +36,8 @@ class AddressController {
 
   async update(req, res, next) {
     try {
+      await validator.Update(req.body);
+
       const { status, data } = await mediator.Update(
         req.params.id,
         req.userId,
