@@ -10,7 +10,7 @@ module.exports = async (request) => {
     complement: yup.string().trim(),
     city: yup.string().trim(),
     state: yup.string().trim().min(2).max(2),
-    zipcode: yup.string().trim().min(9).min(9),
+    zipcode: yup.string().trim().min(9).max(9),
   });
 
   await validate(schema, request);

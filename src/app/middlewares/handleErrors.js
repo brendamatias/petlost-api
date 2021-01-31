@@ -5,6 +5,15 @@ const handleErrors = (err, req, res, next) => {
     console.log(err);
   }
 
+  if (err.name === 'JsonWebTokenError') {
+    return res.status(401).json({
+      error: {
+        code: 'TOKEN_INVALID',
+        message: 'Token inválido',
+      },
+    });
+  }
+
   if (err.name === 'ValidationError') {
     return res.status(400).json({
       errors: err.errors,

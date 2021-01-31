@@ -47,4 +47,8 @@ export default {
     status: 401,
     message: 'Token expirado',
   },
+  TOKEN_NOT_PROVIDED: {
+    status: 401,
+    message: 'Token não fornecido',
+  },
 };
