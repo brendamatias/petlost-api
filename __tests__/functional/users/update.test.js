@@ -76,7 +76,7 @@ describe('Store user', () => {
       })
       .set('Authorization', `Bearer ${userTwo.generateToken()}`);
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
   });
 
   it('should not update the user password without oldPassword', async () => {
@@ -88,7 +88,7 @@ describe('Store user', () => {
       })
       .set('Authorization', `Bearer ${userTwo.generateToken()}`);
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
   });
 
   it('should not update the user password with invalid oldPassword', async () => {
@@ -113,7 +113,7 @@ describe('Store user', () => {
       })
       .set('Authorization', `Bearer ${userTwo.generateToken()}`);
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
   });
 
   it('should not update the user password without password', async () => {
@@ -125,7 +125,7 @@ describe('Store user', () => {
       })
       .set('Authorization', `Bearer ${userTwo.generateToken()}`);
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
   });
 
   it('should not update the user password with different password than password confirmation', async () => {
@@ -138,6 +138,6 @@ describe('Store user', () => {
       })
       .set('Authorization', `Bearer ${userTwo.generateToken()}`);
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
   });
 });

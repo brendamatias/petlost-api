@@ -43,7 +43,7 @@ describe('Store user', () => {
       password: faker.internet.password(),
     });
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
   });
 
   it('should not create a user with a password less than 6 characters', async () => {
@@ -53,7 +53,7 @@ describe('Store user', () => {
       password: '123',
     });
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
   });
 
   it('should not create a user without name', async () => {
@@ -63,7 +63,7 @@ describe('Store user', () => {
       password: faker.internet.password(),
     });
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
   });
 
   it('should not create a user without email', async () => {
@@ -73,7 +73,7 @@ describe('Store user', () => {
       password: faker.internet.password(),
     });
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
   });
 
   it('should not create a user without password', async () => {
@@ -83,6 +83,6 @@ describe('Store user', () => {
       password: '',
     });
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
   });
 });
