@@ -11,7 +11,7 @@ module.exports = async (request) => {
     request.situation = [request.situation];
   }
 
-  const schema = validator.yup.object().shape({
+  const schema = yup.object().shape({
     page: yup.number().integer().moreThan(0),
     limit: yup.number().integer().moreThan(0),
     type: yup.array().of(yup.string().oneOf(['dog', 'cat'])),
