@@ -1,5 +1,3 @@
-import * as Yup from 'yup';
-
 import Pet from '../../models/Pet';
 import Address from '../../models/Address';
 import CachePet from '../../../lib/CachePet';
@@ -9,17 +7,6 @@ import BaseException from '../../exceptions/CustomException';
 
 module.exports = async (id, userId, { name, type, situation, address_id }) => {
   try {
-    const schema = Yup.object({
-      name: Yup.string(),
-      type: Yup.string(),
-      situation: Yup.string(),
-      address_id: Yup.number(),
-    });
-
-    if (!(await schema.isValid({ name, type, situation, address_id }))) {
-      throw new BaseException('VALIDATION_FAILS');
-    }
-
     const pet = await Pet.findByPk(id);
 
     if (!pet) {

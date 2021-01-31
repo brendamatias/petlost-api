@@ -5,6 +5,12 @@ const handleErrors = (err, req, res, next) => {
     console.log(err);
   }
 
+  if (err.name === 'ValidationError') {
+    return res.status(400).json({
+      errors: err.errors,
+    });
+  }
+
   let status = 500;
   let message = 'Ops, ocorreu um erro interno, tente novamente mais tarde';
   let code = 'INTERNAL_SERVER_ERROR';
@@ -17,7 +23,7 @@ const handleErrors = (err, req, res, next) => {
     code = err.code;
   }
 
-  res.status(status).json({
+  return res.status(status).json({
     error: {
       code,
       message,

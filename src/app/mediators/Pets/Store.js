@@ -1,5 +1,3 @@
-import * as Yup from 'yup';
-
 import Pet from '../../models/Pet';
 import Petfile from '../../models/Petfile';
 
@@ -15,20 +13,6 @@ module.exports = async (
   files
 ) => {
   try {
-    const schema = Yup.object({
-      name: Yup.string().required(),
-      type: Yup.string().required(),
-      situation: Yup.string().required(),
-      status: Yup.bool(),
-      address_id: Yup.number().required(),
-    });
-
-    if (
-      !(await schema.isValid({ name, type, situation, status, address_id }))
-    ) {
-      throw new BaseException('VALIDATION_FAILS');
-    }
-
     const addressExists = await Address.findOne({
       where: { id: address_id },
     });

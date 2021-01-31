@@ -1,8 +1,11 @@
 import mediator from '../mediators/Pets';
+import validator from '../validators/Pets';
 
 class PetController {
   async index(req, res, next) {
     try {
+      await validator.All(req.query);
+
       const { status, data } = await mediator.All(req.query);
 
       return res.status(status).json(data);
@@ -23,6 +26,8 @@ class PetController {
 
   async store(req, res, next) {
     try {
+      await validator.Store(req.body);
+
       const { status, data } = await mediator.Store(
         req.userId,
         req.body,
@@ -37,6 +42,8 @@ class PetController {
 
   async update(req, res, next) {
     try {
+      await validator.Update(req.body);
+
       const { status, data } = await mediator.Update(
         req.params.id,
         req.userId,
