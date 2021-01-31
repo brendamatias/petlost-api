@@ -1,5 +1,3 @@
-import * as Yup from 'yup';
-
 import User from '../../models/User';
 
 import responses from '../../../config/httpResponses';
@@ -8,35 +6,9 @@ import BaseException from '../../exceptions/CustomException';
 module.exports = async (
   userId,
   file,
-  { name, email, oldPassword, password, confirmPassword }
+  { name, email, oldPassword, password }
 ) => {
   try {
-    const schema = Yup.object({
-      name: Yup.string(),
-      email: Yup.string().email(),
-      oldPassword: Yup.string().min(6),
-      password: Yup.string()
-        .min(6)
-        .when('oldPassword', (oldPasswordV, field) =>
-          oldPasswordV ? field.required() : field
-        ),
-      confirmPassword: Yup.string().when('password', (passwordV, field) =>
-        passwordV ? field.required().oneOf([Yup.ref('password')]) : field
-      ),
-    });
-
-    if (
-      !(await schema.isValid({
-        name,
-        email,
-        oldPassword,
-        password,
-        confirmPassword,
-      }))
-    ) {
-      throw new BaseException('VALIDATION_FAILS');
-    }
-
     const user = await User.findByPk(userId);
 
     if (!user) {
@@ -51,6 +23,10 @@ module.exports = async (
       if (userExists) {
         throw new BaseException('USER_ALREADY_CREATED');
       }
+    }
+
+    if (password && !oldPassword) {
+      throw new BaseException('OLD_PASSWORD_REQUIRED');
     }
 
     if (oldPassword && !(await user.checkPassword(oldPassword))) {

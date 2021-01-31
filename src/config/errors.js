@@ -27,6 +27,10 @@ export default {
     status: 400,
     message: 'Usuário já cadastrado',
   },
+  OLD_PASSWORD_REQUIRED: {
+    status: 401,
+    message: 'Senha anterior é obrigatória',
+  },
   PASSWORD_DOES_NOT_MATCH: {
     status: 401,
     message: 'Senha anterior incorreta',

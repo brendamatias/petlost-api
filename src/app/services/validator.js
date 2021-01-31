@@ -37,7 +37,6 @@ yup.setLocale({
   array: {
     min: 'deve ter no mínimo ${min} itens',
     max: 'deve ter no máximo ${max} itens',
-    of: 'dsadsa',
   },
 });
 
