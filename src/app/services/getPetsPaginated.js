@@ -1,10 +1,8 @@
-import { Op } from 'sequelize';
-
 import Pet from '../models/Pet';
 import Petfile from '../models/Petfile';
 import Address from '../models/Address';
 
-module.exports = async ({ page, limit, type, situation }) => {
+module.exports = async ({ page, limit, type, situation, user_id }) => {
   const whereClause = {
     status: true,
   };
@@ -15,6 +13,10 @@ module.exports = async ({ page, limit, type, situation }) => {
 
   if (situation) {
     whereClause.situation = situation;
+  }
+
+  if (user_id) {
+    whereClause.user_id = user_id;
   }
 
   const pets = await Pet.findAndCountAll({
