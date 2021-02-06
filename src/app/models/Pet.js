@@ -8,9 +8,14 @@ class Pet extends Model {
         type: Sequelize.ENUM({
           values: ['dog', 'cat'],
         }),
+        gender: Sequelize.ENUM({
+          values: ['female', 'male'],
+        }),
         situation: Sequelize.ENUM({
           values: ['adoption', 'disappeared', 'mating'],
         }),
+        birth_date: Sequelize.DATE,
+        description: Sequelize.STRING,
         status: Sequelize.BOOLEAN,
       },
       {
@@ -24,6 +29,7 @@ class Pet extends Model {
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
     this.belongsTo(models.Address, { foreignKey: 'address_id', as: 'address' });
+    this.belongsTo(models.Breed, { foreignKey: 'breed_id', as: 'breed' });
     this.hasMany(models.Petfile, { foreignKey: 'pet_id', as: 'files' });
   }
 }
