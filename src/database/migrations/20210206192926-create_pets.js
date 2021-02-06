@@ -43,8 +43,8 @@ module.exports = {
           key: 'id',
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
-          allowNull: false,
         },
+        allowNull: false,
       },
       address_id: {
         type: Sequelize.UUID,
@@ -53,8 +53,8 @@ module.exports = {
           key: 'id',
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
-          allowNull: false,
         },
+        allowNull: false,
       },
       user_id: {
         type: Sequelize.UUID,
@@ -63,8 +63,8 @@ module.exports = {
           key: 'id',
           onUpdate: 'CASCADE',
           onDelete: 'SET NULL',
-          allowNull: true,
         },
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,
