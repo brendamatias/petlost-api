@@ -4,11 +4,12 @@ import mongoose from 'mongoose';
 import User from '../app/models/User';
 import Address from '../app/models/Address';
 import Pet from '../app/models/Pet';
+import Breed from '../app/models/Breed';
 import Petfile from '../app/models/Petfile';
 
 import databaseConfig from '../config/database';
 
-const models = [User, Address, Pet, Petfile];
+const models = [User, Address, Pet, Breed, Petfile];
 
 class Database {
   constructor() {
