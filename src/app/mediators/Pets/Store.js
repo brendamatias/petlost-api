@@ -1,7 +1,8 @@
 import Pet from '../../models/Pet';
+import Breed from '../../models/Breed';
 import Petfile from '../../models/Petfile';
-
 import Address from '../../models/Address';
+
 import CachePet from '../../../lib/CachePet';
 
 import responses from '../../../config/httpResponses';
@@ -9,7 +10,17 @@ import BaseException from '../../exceptions/CustomException';
 
 module.exports = async (
   userId,
-  { name, type, situation, status, address_id },
+  {
+    name,
+    type,
+    gender,
+    situation,
+    birth_date,
+    description,
+    status,
+    address_id,
+    breed_id,
+  },
   files
 ) => {
   try {
@@ -21,12 +32,28 @@ module.exports = async (
       throw new BaseException('ADDRESS_NOT_FOUND');
     }
 
+    const breedExists = await Breed.findOne({
+      where: { id: breed_id },
+    });
+
+    if (!breedExists) {
+      throw new BaseException('BREED_FOUND');
+    }
+
+    if (breedExists.type !== type) {
+      throw new BaseException('BREED_INVALID');
+    }
+
     const pet = await Pet.create({
       name,
       type,
+      gender,
       situation,
+      birth_date,
+      description,
       status: status || true,
       address_id,
+      breed_id,
       user_id: userId,
     });
 
