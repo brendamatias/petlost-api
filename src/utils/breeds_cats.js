@@ -72,6 +72,7 @@ const breeds = [
   'Turkish Angorá',
   'Turkish Van',
   'York Chocolate',
+  'Outros',
 ];
 
 module.exports = breeds;

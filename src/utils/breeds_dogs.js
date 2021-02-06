@@ -178,6 +178,7 @@ const breeds = [
   'West Highland White Terrier',
   'Whippet',
   'Yorkshire Terrier',
+  'Outros',
 ];
 
 module.exports = breeds;
