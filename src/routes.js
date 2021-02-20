@@ -5,7 +5,6 @@ import multerConfig from './config/multer';
 import UserController from './app/controllers/UserController';
 import PasswordController from './app/controllers/PasswordController';
 import AuthController from './app/controllers/AuthController';
-import AddressController from './app/controllers/AddressController';
 import PetController from './app/controllers/PetController';
 
 import MessageController from './app/controllers/MessageController';
@@ -27,15 +26,6 @@ routes.use(authMiddleware);
 /* Users */
 routes.get('/users/:id', UserController.show);
 routes.put('/users', upload.single('avatar'), UserController.update);
-/* ---- */
-
-/* Adresses */
-routes.get('/adresses', AddressController.index);
-routes.get('/adresses/:id', AddressController.show);
-routes.post('/adresses', AddressController.store);
-routes.put('/adresses/:id', AddressController.update);
-routes.delete('/adresses/:id', AddressController.delete);
-/* ------- */
 
 /* Pets */
 routes.get('/pets', PetController.index);

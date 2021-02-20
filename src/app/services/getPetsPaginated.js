@@ -1,6 +1,5 @@
 import Pet from '../models/Pet';
 import Petfile from '../models/Petfile';
-import Address from '../models/Address';
 
 module.exports = async ({ page, limit, type, situation, user_id }) => {
   const whereClause = {
@@ -21,11 +20,6 @@ module.exports = async ({ page, limit, type, situation, user_id }) => {
 
   const pets = await Pet.findAndCountAll({
     include: [
-      {
-        model: Address,
-        as: 'address',
-        attributes: ['id', 'city', 'state'],
-      },
       {
         model: Petfile,
         as: 'files',

@@ -11,10 +11,6 @@ export default {
     status: 404,
     message: 'Usuário não encontrado',
   },
-  ADDRESS_NOT_FOUND: {
-    status: 404,
-    message: 'Endereço não encontrado',
-  },
   PET_NOT_FOUND: {
     status: 404,
     message: 'Pet não encontrado',
