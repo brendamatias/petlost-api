@@ -14,7 +14,8 @@ module.exports = async (request) => {
     birth_date: yup.date().max(new Date()).required(),
     description: yup.string().trim().required(),
     status: yup.boolean().oneOf([true, false]),
-    address_id: yup.string().uuid().required(),
+    state: yup.string().min(2).max(2).required(),
+    city: yup.string().required(),
     breed_id: yup.string().uuid().required(),
   });
 

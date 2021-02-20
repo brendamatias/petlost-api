@@ -36,20 +36,18 @@ module.exports = {
         allowNull: false,
         defaultTo: true,
       },
+      state: {
+        type: Sequelize.STRING(2),
+        allowNull: false,
+      },
+      city: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       breed_id: {
         type: Sequelize.UUID,
         references: {
           model: 'breeds',
-          key: 'id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-        },
-        allowNull: false,
-      },
-      address_id: {
-        type: Sequelize.UUID,
-        references: {
-          model: 'addresses',
           key: 'id',
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',

@@ -5,6 +5,15 @@ const handleErrors = (err, req, res, next) => {
     console.log(err);
   }
 
+  if (err.name === 'TokenExpiredError') {
+    return res.status(401).json({
+      error: {
+        code: 'TOKEN_EXPIRED',
+        message: 'Token expirado',
+      },
+    });
+  }
+
   if (err.name === 'JsonWebTokenError') {
     return res.status(401).json({
       error: {

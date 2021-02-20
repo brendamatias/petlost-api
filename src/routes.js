@@ -31,7 +31,7 @@ routes.put('/users', upload.single('avatar'), UserController.update);
 routes.get('/pets', PetController.index);
 routes.get('/pets/:id', PetController.show);
 routes.post('/pets', upload.array('file', 3), PetController.store);
-routes.put('/pets/:id', PetController.update);
+routes.put('/pets/:id', upload.array('file', 3), PetController.update);
 routes.delete('/pets/:id', PetController.delete);
 
 routes.get('/messages', MessageController.index);

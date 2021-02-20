@@ -11,8 +11,8 @@ module.exports = async (request) => {
     birth_date: yup.date().max(new Date()),
     description: yup.string().trim(),
     status: yup.boolean().oneOf([true, false]),
-    address_id: yup.string().uuid().required(),
-    breed_id: yup.string().uuid().required(),
+    state: yup.string().min(2).max(2),
+    city: yup.string(),
   });
 
   await validate(schema, request);
