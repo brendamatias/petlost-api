@@ -63,15 +63,17 @@ module.exports = async (
       user_id: userId,
     });
 
-    await Promise.all(
-      files.map(async (file) => {
-        await Petfile.create({
-          pet_id: pet.id,
-          name: file.originalname,
-          path: file.filename,
-        });
-      })
-    );
+    if (files) {
+      await Promise.all(
+        files.map(async (file) => {
+          await Petfile.create({
+            pet_id: pet.id,
+            name: file.originalname,
+            path: file.filename,
+          });
+        })
+      );
+    }
 
     await CachePet.invalidatePrefix('pets-list');
 

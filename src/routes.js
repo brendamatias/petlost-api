@@ -6,8 +6,9 @@ import UserController from './app/controllers/UserController';
 import PasswordController from './app/controllers/PasswordController';
 import AuthController from './app/controllers/AuthController';
 import PetController from './app/controllers/PetController';
+import BreedController from './app/controllers/BreedController';
 
-import MessageController from './app/controllers/MessageController';
+import ChatController from './app/controllers/ChatController';
 import KeyController from './app/controllers/KeyController';
 
 import authMiddleware from './app/middlewares/auth';
@@ -34,9 +35,10 @@ routes.post('/pets', upload.array('file', 3), PetController.store);
 routes.put('/pets/:id', upload.array('file', 3), PetController.update);
 routes.delete('/pets/:id', PetController.delete);
 
-routes.get('/messages', MessageController.index);
-routes.get('/messages/:id', MessageController.show);
+routes.post('/chats', ChatController.store);
 
 routes.get('/keys/:id', KeyController.show);
+
+routes.get('/breeds', BreedController.index);
 
 export default routes;
