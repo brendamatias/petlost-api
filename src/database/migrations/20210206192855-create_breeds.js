@@ -39,7 +39,9 @@ module.exports = {
   down: (queryInterface) => {
     return Promise.all([
       queryInterface.dropTable('breeds'),
-      queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_breeds_type";'),
+      queryInterface.sequelize.query(
+        'DROP TYPE IF EXISTS "enum_breeds_type" CASCADE;'
+      ),
     ]);
   },
 };
