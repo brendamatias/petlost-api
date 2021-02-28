@@ -1,11 +1,10 @@
 import Pet from '../../models/Pet';
-import Address from '../../models/Address';
 import CachePet from '../../../lib/CachePet';
 
 import responses from '../../../config/httpResponses';
 import BaseException from '../../exceptions/CustomException';
 
-module.exports = async (id, userId, { name, type, situation, address_id }) => {
+module.exports = async (id, userId, { name, type, situation, state, city }) => {
   try {
     const pet = await Pet.findByPk(id);
 
@@ -17,17 +16,7 @@ module.exports = async (id, userId, { name, type, situation, address_id }) => {
       throw new BaseException('UNAUTHORIZED_USER');
     }
 
-    if (address_id) {
-      const addressExists = await Address.findOne({
-        where: { id: address_id },
-      });
-
-      if (!addressExists) {
-        throw new BaseException('ADDRESS_NOT_FOUND');
-      }
-    }
-
-    await pet.update({ name, type, situation, address_id });
+    await pet.update({ name, type, situation, state, city });
 
     await CachePet.invalidatePrefix('pets-list');
 

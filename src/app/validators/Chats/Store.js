@@ -4,7 +4,8 @@ module.exports = async (request) => {
   const { yup, validate } = validator;
 
   const schema = yup.object().shape({
-    email: yup.string().trim().email().required(),
+    message: yup.string().trim().required(),
+    pet_id: yup.string().uuid().required(),
   });
 
   await validate(schema, request);

@@ -5,23 +5,27 @@ export default {
   },
   VALIDATION_FAILS: {
     status: 401,
-    message: 'Validação falhou.',
+    message: 'Validação falhou',
   },
   USER_NOT_FOUND: {
     status: 404,
-    message: 'Usuário não encontrado.',
-  },
-  ADDRESS_NOT_FOUND: {
-    status: 404,
-    message: 'Endereço não encontrado.',
+    message: 'Usuário não encontrado',
   },
   PET_NOT_FOUND: {
     status: 404,
-    message: 'Pet não encontrado.',
+    message: 'Pet não encontrado',
+  },
+  BREED_NOT_FOUND: {
+    status: 404,
+    message: 'Raça não encontrada',
+  },
+  BREED_INVALID: {
+    status: 404,
+    message: 'Raça inválida',
   },
   PASSWORD_INCORRECT: {
     status: 401,
-    message: 'Senha incorreta.',
+    message: 'Senha incorreta',
   },
   USER_ALREADY_CREATED: {
     status: 400,
@@ -50,5 +54,9 @@ export default {
   TOKEN_NOT_PROVIDED: {
     status: 401,
     message: 'Token não fornecido',
+  },
+  DELETE_FILE_ERROR: {
+    status: 401,
+    message: 'Erro ao deletar imagem',
   },
 };

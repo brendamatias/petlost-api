@@ -1,5 +1,7 @@
 import User from '../../models/User';
 
+import deleteFile from '../../services/deleteFile';
+
 import responses from '../../../config/httpResponses';
 import BaseException from '../../exceptions/CustomException';
 
@@ -37,14 +39,16 @@ module.exports = async (
 
     if (file) {
       avatar = file.key;
+    } else if (avatar) {
+      await deleteFile(avatar);
+
+      avatar = null;
     }
 
     await user.update({ name, email, password, avatar });
 
     return responses.ok(user);
   } catch (err) {
-    // TO DO - remover file
-
     throw err.name === 'CustomException' ? err : new Error(err);
   }
 };

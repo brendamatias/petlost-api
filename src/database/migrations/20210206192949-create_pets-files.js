@@ -2,10 +2,10 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('petfiles', {
       id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
+        defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
       name: {
         type: Sequelize.STRING,
@@ -17,7 +17,7 @@ module.exports = {
         unique: true,
       },
       pet_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         references: {
           model: 'pets',
           key: 'id',

@@ -1,7 +1,19 @@
 /* eslint-disable no-template-curly-in-string */
 
 import * as yup from 'yup';
-import BaseException from '../exceptions/ValidatorException';
+import { version as uuidVersion, validate as uuidValidate } from 'uuid';
+
+import BaseException from '../app/exceptions/ValidatorException';
+
+function uuidValidateV4(uuid) {
+  return uuidValidate(uuid) && uuidVersion(uuid) === 4;
+}
+
+yup.addMethod(yup.string, 'uuid', () => {
+  return yup.mixed().test(`uuid`, (value) => {
+    return uuidValidateV4(value);
+  });
+});
 
 yup.setLocale({
   mixed: {

@@ -1,4 +1,4 @@
-import * as validator from '../../services/validator';
+import * as validator from '../../../utils/validator';
 
 module.exports = async (request) => {
   const { yup, validate } = validator;
