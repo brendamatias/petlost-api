@@ -1,6 +1,7 @@
 import Pet from './app/models/Pet';
 import Chat from './app/models/Chat';
 import User from './app/models/User';
+import Petfile from './app/models/Petfile';
 
 export default async (socket, clientInfo) => {
   const chats = await Chat.findAll({
@@ -13,10 +14,27 @@ export default async (socket, clientInfo) => {
       {
         model: Pet,
         as: 'pet',
-        attributes: ['id', 'name'],
+        attributes: ['id', 'name', 'user_id'],
+        include: [
+          {
+            model: User,
+            as: 'user',
+            attributes: ['id', 'name', 'avatar', 'avatar_url'],
+          },
+          {
+            model: Petfile,
+            as: 'files',
+            attributes: ['id', 'name', 'path', 'url'],
+          },
+        ],
       },
     ],
-    where: { sender_id: clientInfo.user_id },
+    $or: [
+      [
+        { 'pet.user_id': clientInfo.user_id },
+        { sender_id: clientInfo.user_id },
+      ],
+    ],
   });
 
   socket.emit(`getChats:${clientInfo.user_id}`, chats);

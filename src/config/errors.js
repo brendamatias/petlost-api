@@ -55,4 +55,8 @@ export default {
     status: 401,
     message: 'Token não fornecido',
   },
+  DELETE_FILE_ERROR: {
+    status: 401,
+    message: 'Erro ao deletar imagem',
+  },
 };
