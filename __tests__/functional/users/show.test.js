@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import { v4 as uuidv4 } from 'uuid';
 import app from '../../../src/app';
 import factory from '../../factories';
 import shutdownRedis from '../../utils/shutdownRedis';
@@ -28,8 +29,9 @@ describe('Show user', () => {
   });
 
   it('should not show user with invalid id', async () => {
+    const uuid = uuidv4();
     const response = await request(app)
-      .get(`/users/${user.id}12314564`)
+      .get(`/users/${uuid}`)
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(404);
