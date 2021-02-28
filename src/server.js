@@ -15,8 +15,6 @@ const clients = [];
 io.on('connection', (socket) => {
   console.log(`New client connected ${socket.id}`);
 
-  getChats(socket, { user_id: '43523fc6-3bfc-4988-9318-9b8c83f45e39' });
-
   socket.on('clientInfo', (data) => {
     const clientInfo = { user_id: data.id, client_id: socket.id };
 
