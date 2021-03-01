@@ -39,6 +39,7 @@
     "nodemailer-express-handlebars": "^4.0.0",
     "pg": "^8.0.2",
     "pg-hstore": "^2.3.3",
+    "pubnub": "^4.29.11",
     "rate-limiter-flexible": "^2.1.6",
     "redis": "^3.0.2",
     "sequelize": "^6.5.0",
