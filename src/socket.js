@@ -35,6 +35,7 @@ export default async (socket, clientInfo) => {
         { sender_id: clientInfo.user_id },
       ],
     ],
+    order: [['created_at', 'DESC']],
   });
 
   socket.emit(`getChats:${clientInfo.user_id}`, chats);
