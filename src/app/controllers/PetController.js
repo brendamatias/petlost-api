@@ -47,7 +47,8 @@ class PetController {
       const { status, data } = await mediator.Update(
         req.params.id,
         req.userId,
-        req.body
+        req.body,
+        req.files
       );
 
       return res.status(status).json(data);

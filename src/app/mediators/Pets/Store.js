@@ -36,19 +36,6 @@ module.exports = async (
       throw new BaseException('BREED_INVALID');
     }
 
-    console.log({
-      name,
-      type,
-      gender,
-      situation,
-      birth_date,
-      description,
-      status: status || true,
-      state,
-      city,
-      breed_id,
-      user_id: userId,
-    });
     const pet = await Pet.create({
       name,
       type,

@@ -1,10 +1,29 @@
 import Pet from '../../models/Pet';
+import Petfile from '../../models/Petfile';
+
 import CachePet from '../../../lib/CachePet';
 
+import deleteFile from '../../services/deleteFile';
 import responses from '../../../config/httpResponses';
 import BaseException from '../../exceptions/CustomException';
 
-module.exports = async (id, userId, { name, type, situation, state, city }) => {
+module.exports = async (
+  id,
+  userId,
+  {
+    name,
+    type,
+    breed_id,
+    gender,
+    situation,
+    birth_date,
+    state,
+    city,
+    description,
+    file,
+  },
+  files
+) => {
   try {
     const pet = await Pet.findByPk(id);
 
@@ -16,7 +35,38 @@ module.exports = async (id, userId, { name, type, situation, state, city }) => {
       throw new BaseException('UNAUTHORIZED_USER');
     }
 
-    await pet.update({ name, type, situation, state, city });
+    const petFiles = await Petfile.findOne({ where: { pet_id: id } });
+    const path = petFiles ? petFiles.path : null;
+
+    if (files.length) {
+      if (petFiles) {
+        petFiles.name = files[0].originalname;
+        petFiles.path = files[0].filename;
+
+        await petFiles.save();
+      } else {
+        await Petfile.create({
+          pet_id: pet.id,
+          name: files[0].originalname,
+          path: files[0].filename,
+        });
+      }
+    } else if (path && !file) {
+      await deleteFile(path);
+      await petFiles.destroy();
+    }
+
+    await pet.update({
+      name,
+      type,
+      breed_id,
+      gender,
+      situation,
+      birth_date,
+      state,
+      city,
+      description,
+    });
 
     await CachePet.invalidatePrefix('pets-list');
 
