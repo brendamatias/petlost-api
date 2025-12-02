@@ -41,7 +41,7 @@
     "pg-hstore": "^2.3.3",
     "rate-limiter-flexible": "^2.1.6",
     "redis": "^3.0.2",
-    "sequelize": "^5.21.6",
+    "sequelize": "^5.22.5",
     "sequelize-cli": "^5.5.1",
     "socket.io": "^2.3.0",
     "yup": "^0.28.3"
